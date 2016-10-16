@@ -242,3 +242,5 @@ ModelManifest.xml
 .fake/
 /jsonconst/app.js
 *.map
+/jsonconst/dist/app.js
+/jsonconst/dist/app.d.ts
