@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "jsonconst", "jsonconst\jsonconst.njsproj", "{61ECDF76-08E1-4814-8328-100190953EEA}"
 EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "jsonconst-cli", "jsonconst-cli\jsonconst-cli.njsproj", "{A6D01A75-D9B8-4F5D-8C0C-22EC5C3671E8}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "grunt-jsonconst", "grunt-jsonconst\grunt-jsonconst.njsproj", "{10A752C7-ABDC-479A-8442-D5B9AF113685}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{61ECDF76-08E1-4814-8328-100190953EEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61ECDF76-08E1-4814-8328-100190953EEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61ECDF76-08E1-4814-8328-100190953EEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6D01A75-D9B8-4F5D-8C0C-22EC5C3671E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6D01A75-D9B8-4F5D-8C0C-22EC5C3671E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6D01A75-D9B8-4F5D-8C0C-22EC5C3671E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6D01A75-D9B8-4F5D-8C0C-22EC5C3671E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A752C7-ABDC-479A-8442-D5B9AF113685}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A752C7-ABDC-479A-8442-D5B9AF113685}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A752C7-ABDC-479A-8442-D5B9AF113685}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A752C7-ABDC-479A-8442-D5B9AF113685}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

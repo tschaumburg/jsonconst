@@ -244,3 +244,5 @@ ModelManifest.xml
 *.map
 /jsonconst/dist/app.js
 /jsonconst/dist/app.d.ts
+/jsonconst/dist
+/jsonconst-cli/Scripts/typings/node

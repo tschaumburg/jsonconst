@@ -1,22 +1,22 @@
-﻿    
-var testSchema = {
+{
     "$schema": "http://json-schema.org/draft-04/schema#",
+    "$classname": "PhotoAlbum",
     "type": "object",
-    "title": "Root schema.",
-    "description": "An explanation about the purpose of this instance.",
+    "title": "Photo album metadata",
+    "description": "Describes a photo album, and metadata about the images in it",
     "properties": {
         "name": {
             "type": "string",
-            "title": "Name schema.",
-            "description": "An explanation about the purpose of this instance."
+            "title": "Album name",
+            "description": "The name of the photo album"
         },
         "images": {
             "type": "array",
-            "title": "Images schema.",
-            "description": "An explanation about the purpose of this instance.",
+            "title": "Photos in the album",
+            "description": "Describes each of the photos in the album",
             "items": {
-                "classname": "ImageMetaData",
                 "type": "object",
+                "$classname": "ImageMetaData",
                 "title": "0 schema.",
                 "description": "An explanation about the purpose of this instance.",
                 "properties": {
@@ -43,19 +43,3 @@ var testSchema = {
         "images"
     ]
 }
-
-var testValues = {
-    "name": "Album 1",
-    "images": [
-        {
-            "date": "March 72",
-            "photographer": "Thomas"
-        }
-    ]
-}
-
-console.log('Hello world');
-
-var files = new dk.schaumburgit.jsonconst.Generate().generate(testSchema, testValues, "typescript", "test.module", "config");
-
-console.log(files[0].contents);

@@ -1,7 +1,7 @@
 ﻿{
     "compilerOptions": {
         "target": "es5",
-        "module": "system",
+        "module": "commonjs",
         "declaration": true,
         "noImplicitAny": false,
         "removeComments": false,
@@ -9,11 +9,11 @@
         "preserveConstEnums": true,
         "suppressImplicitAnyIndexErrors": true,
         "outDir": "dist",
+        //"out": "dist/jsonconst.js",
         "rootDir": "source",
         "sourceRoot": "source",
         "noEmitOnError": true,
-        "sourceMap": true,
-        "outFile": "dist/app.js"
+        "sourceMap": true
     },
     "exclude": [
         "dist",

@@ -1,0 +1,9 @@
+{
+  "name": "jsonconst-cli",
+  "version": "0.0.0",
+  "description": "jsonconst-cli",
+  "main": "app.js",
+  "author": {
+    "name": "Thomas"
+  }
+}

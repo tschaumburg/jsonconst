@@ -1,0 +1,44 @@
+{
+  "name": "grunt-jsonconst",
+  "description": "The best Grunt plugin ever.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/Thomas/grunt-jsonconst",
+  "author": {
+    "name": "tschaumburg",
+    "email": "thomas@schaumburg-it.dk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tschaumburg/grunt-jsonconst.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tschaumburg/grunt-jsonconst/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tschaumburg/grunt-jsonconst/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "~0.4.5"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "jsonconst": "0.0.2"
+  }
+}

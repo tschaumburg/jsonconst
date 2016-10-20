@@ -1,20 +1,23 @@
 {
-    "name": "jsonconst",
-    "version": "0.0.0",
-    "description": "jsonconst",
-    "main": "dist/app.js",
-    //"files": [
-    //    "dist/app.js"
-    //],
-    "author": {
-        "name": "Thomas Schaumburg",
-        "email": "thomas@schaumburg-it.dk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tschaumburg/jsonconst.git"
-    },
-    "readme": "",
-    "dependencies": {
-    }
+  "name": "jsonconst",
+  "version": "0.0.2",
+  "description": "jsonconst",
+  "main": "dist/jsonconst.js",
+  "files": [
+    "dist/jsonconst.js",
+    "dist/jsonconst-schema.js",
+    "dist/jsonconst-typescript.js"
+  ],
+  "author": {
+    "name": "Thomas Schaumburg",
+    "email": "thomas@schaumburg-it.dk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tschaumburg/jsonconst.git"
+  },
+  "readme": "",
+  "dependencies": {
+    "json-schema-ref-parser": "^3.1.2"
+  }
 }

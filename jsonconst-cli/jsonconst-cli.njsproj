@@ -3,16 +3,16 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <Name>jsonconst</Name>
-    <RootNamespace>jsonconst</RootNamespace>
+    <Name>jsonconst-cli</Name>
+    <RootNamespace>jsonconst-cli</RootNamespace>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>61ecdf76-08e1-4814-8328-100190953eea</ProjectGuid>
+    <ProjectGuid>a6d01a75-d9b8-4f5d-8c0c-22ec5c3671e8</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>dist\jsonconst-test.js</StartupFile>
+    <StartupFile>app.ts</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <SearchPath>
     </SearchPath>
@@ -20,11 +20,11 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ProjectFiles</ProjectView>
+    <ProjectView>ShowAllFiles</ProjectView>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <EnableTypeScript>true</EnableTypeScript>
-    <StartWebBrowser>False</StartWebBrowser>
+    <StartWebBrowser>false</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,26 +33,15 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="source\testdata\referenced2.json" />
-    <Content Include="source\testdata\referenced.json" />
-    <Content Include="source\testdata\testSchema.json" />
-    <Content Include="source\testdata\testValues.json" />
-    <Content Include="tsconfig.json" />
-    <TypeScriptCompile Include="source\jsonconst-schema.ts" />
-    <TypeScriptCompile Include="source\jsonconst.ts" />
+    <TypeScriptCompile Include="app.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
-    <TypeScriptCompile Include="source\jsonconst-test.ts" />
-    <TypeScriptCompile Include="source\jsonconst-typescript.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dist\" />
-    <Folder Include="source\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\node\" />
-    <Folder Include="source\testdata\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
