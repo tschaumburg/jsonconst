@@ -125,6 +125,9 @@ class SchemaManager implements ISchemaManager
 {
     public getSchemaInfo(schema: Object, callback: (err, schemainfo: ISchema) => void): void
     {
+        if (!schema)
+            return callback(null, null);
+
         $RefParser.dereference(schema, null, function (err, dereferencedSchema)
         {
             if (err)

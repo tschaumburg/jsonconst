@@ -40,6 +40,7 @@
     <Content Include="source\testdata\testValues.json" />
     <Content Include="tsconfig.json" />
     <TypeScriptCompile Include="source\jsonconst-schema.ts" />
+    <TypeScriptCompile Include="source\jsonconst-csharp.ts" />
     <TypeScriptCompile Include="source\jsonconst.ts" />
     <Content Include="package.json" />
     <Content Include="README.md" />

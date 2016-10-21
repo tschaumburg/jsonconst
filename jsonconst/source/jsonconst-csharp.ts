@@ -1,11 +1,12 @@
 ﻿/// <reference path="jsonconst-schema" />
 import * as jsonconstSchema from "./jsonconst-schema";
-export class GenerateTypescript
+export class GenerateCSharp
 {
     public generate(
         schema: jsonconstSchema.ISchema,
         instance: {},
-        _namespace: string
+        _namespace: string,
+        rootName: string
     ): string
     {
         var filecontents = "";
@@ -14,9 +15,13 @@ export class GenerateTypescript
             filecontents = filecontents + "namespace " + _namespace + "\n";
             filecontents = filecontents + "{" + "\n";
         }
+
         filecontents = filecontents + this.generateClasses(schema) + "\n";
         filecontents = filecontents + this.generateInstances(schema, instance) + "\n";
-        filecontents = filecontents + "    export default " + this.createValueExpresssion(schema, instance) + ";" + "\n";
+
+        rootName = rootName || "root";
+        filecontents = filecontents + "    const " + this.getTypename(schema) + " " + rootName + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n";
+
         if (_namespace)
         {
             filecontents = filecontents + "}" + "\n";
@@ -45,24 +50,24 @@ export class GenerateTypescript
         var result = "";
 
         if (schema.getKind() != jsonconstSchema.SchemaKind.objectKind)
-            throw new Error("Cannot generate class for a " + schema.getKind());
+            return "";
 
         if (schema.getGenerating())
-            return;
+            return "";
 
         schema.setGenerating(true);
 
         // JSDOC:
         var title = schema.getTitle();
         var description = schema.getDescription();
-        result = result + "    /**" + "\n";
+        result = result + "    /// <summary>" + "\n";
         if (title)
-            result = result + "     * " + title + ":\n";
+            result = result + "    /// " + title + ":\n";
         if (description)
-            result = result + "     * " + description + "\n";
-        result = result + "     */" + "\n";
+            result = result + "    /// " + description + "\n";
+        result = result + "    /// </summary>" + "\n";
 
-        result = result + "    export abstract class " + this.getTypename(schema) + "\n";
+        result = result + "    public interface " + this.getTypename(schema) + "\n";
         result = result + "    {" + "\n";
 
         var propertyNames = schema.getPropertyNames();
@@ -92,14 +97,14 @@ export class GenerateTypescript
         var result = "";
 
         // JSDOC:
-        result = result + "        /**" + "\n";
+        result = result + "        /// <summary>" + "\n";
         if (title)
-            result = result + "         * " + title + ":\n";
+            result = result + "        /// " + title + ":\n";
         if (description)
-            result = result + "         * " + description + "\n";
-        result = result + "         */" + "\n";
+            result = result + "        /// " + description + "\n";
+        result = result + "        /// </summary>" + "\n";
 
-        result = result + "        public abstract get " + propname + "(): " + this.getTypename(propSchema) + ";" + "\n";
+        result = result + "        " + this.getTypename(propSchema) + " " + propname + " { get; } " + "\n";
 
         // remember to generate code for referenced typess:
         switch (propSchema.getKind())
@@ -153,7 +158,7 @@ export class GenerateTypescript
     private instances: { schema: jsonconstSchema.ISchema, value: any }[] = [];
     private _generateInstance(schema: jsonconstSchema.ISchema, instance: any): string
     {
-        var result = "    class " + this.getInstanceClassname(schema, instance) + " extends " + schema.getClassname() + "\n";
+        var result = "    class " + this.getInstanceClassname(schema, instance) + ": " + schema.getClassname() + "\n";
         result = result + "    {" + "\n";
 
         for (var propname in instance)
@@ -170,10 +175,14 @@ export class GenerateTypescript
             if (!propSchema)
                 continue;
 
-            result = result + "        public get " + propname + "(): " + this.getTypename(propSchema) + "\n";
+            result = result + "        public " + this.getTypename(propSchema) + " " + propname + "\n";
             result = result + "        {\n";
-            result = result + "            return " + this.createValueExpresssion(propSchema, propValue) + ";\n";
+            result = result + "            get\n";
+            result = result + "            {\n";
+            result = result + "                return " + this.createValueExpresssion(propSchema, propValue) + ";\n";
+            result = result + "            }\n";
             result = result + "        }\n";
+            result = result + "        \n";
         }
 
         result = result + "    }" + "\n";
@@ -189,7 +198,7 @@ export class GenerateTypescript
         switch (schema.getKind())
         {
             case jsonconstSchema.SchemaKind.arrayKind:
-                result = result + "[";
+                result = result + "new " + this.getTypename(schema) + " { ";
                 var memberInstances: any[] = instance as any[];
                 var memberSchema = schema.getItems();
                 if (memberInstances && memberSchema)
@@ -200,7 +209,7 @@ export class GenerateTypescript
                         //this.instances.push({ schema: memberSchema, value: memberInstances[m] });
                     }
                 }
-                result = result + "]";
+                result = result + "}";
                 return result;
             case jsonconstSchema.SchemaKind.objectKind:
                 this.instances.push({ schema: schema, value: instance });

@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>jsonconst-cli</Name>
     <RootNamespace>jsonconst-cli</RootNamespace>
-    <ScriptArguments>"C:\Users\Thomas\Source\Repos\jsonconst\jsonconst\source\testdata\album.json" -l typescript</ScriptArguments>
+    <ScriptArguments>"C:\Users\Thomas\Source\Repos\jsonconst\jsonconst\source\testdata\album.json" -l csharp</ScriptArguments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -35,11 +35,13 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <Content Include="node_modules\jsonconst\dist\jsonconst-csharp.js.map" />
     <Content Include="node_modules\jsonconst\dist\jsonconst-schema.js.map" />
     <Content Include="node_modules\jsonconst\dist\jsonconst-typescript.js.map" />
     <Content Include="node_modules\jsonconst\dist\jsonconst.js.map" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-csharp.d.ts" />
     <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-schema.d.ts" />
     <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-typescript.d.ts" />
     <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst.d.ts" />
@@ -53,6 +55,7 @@
     <Folder Include="Scripts\typings\node\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="node_modules\jsonconst\dist\jsonconst-csharp.js" />
     <Compile Include="node_modules\jsonconst\dist\jsonconst-schema.js" />
     <Compile Include="node_modules\jsonconst\dist\jsonconst-typescript.js" />
     <Compile Include="node_modules\jsonconst\dist\jsonconst.js" />

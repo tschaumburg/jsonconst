@@ -2,6 +2,7 @@
 /// <reference path="jsonconst-typescript" />
 import * as schema from "./jsonconst-schema";
 import * as typescript from "./jsonconst-typescript";
+import * as csharp from "./jsonconst-csharp";
 var $RefParser = require('json-schema-ref-parser');
 var fs = require('fs');
 const url = require('url');
@@ -70,33 +71,41 @@ export class JsonConst
         //baseUrl: string,
         jsonUrl: string,
         language: string,
-        //basename: string,
+        _namespace: string,
+        rootName: string,
         callback: (err, code: string) => void
     ): void
     {
-        var jsonInstance = this.getJSON(jsonUrl);
-        var basename = this.getBasename(jsonUrl);
-        var baseUrl = jsonUrl;
+        try
+        {
+            var jsonInstance = this.getJSON(jsonUrl);
+            var basename = this.getBasename(jsonUrl);
+            var baseUrl = jsonUrl;
 
-        var schemaRef = jsonInstance['$schema'] as string;
-        if (!schemaRef)
-        {
-            this.doGenerate(jsonInstance, null, language, callback);
+            var schemaRef = jsonInstance['$schema'] as string;
+            if (!schemaRef)
+            {
+                this.doGenerate(jsonInstance, null, language, _namespace, rootName, callback);
+            }
+            else
+            {
+                var self = this;
+                this.resolveJsonPointer(
+                    schemaRef,
+                    baseUrl,
+                    (err, schema) =>
+                    {
+                        if (err)
+                            callback(err, null);
+                        else
+                            self.doGenerate(jsonInstance, schema, language, _namespace, rootName, callback);
+                    }
+                );
+            }
         }
-        else
+        catch (err)
         {
-            var self = this;
-            this.resolveJsonPointer(
-                schemaRef,
-                baseUrl,
-                (err, schema) =>
-                {
-                    if (err)
-                        callback(err, null);
-                    else
-                        self.doGenerate(jsonInstance, schema, language, callback);
-                }
-            );
+            callback(err, null);
         }
     }
 
@@ -104,7 +113,8 @@ export class JsonConst
         jsonInstance: {},
         jsonSchema: {},
         language: string,
-        //basename: string,
+        _namespace: string,
+        rootName: string,
         callback: (err, code: string) => void
     ): void
     {
@@ -113,6 +123,17 @@ export class JsonConst
             jsonSchema,
             function (err, dereferencedSchema: schema.ISchema)
             {
+                if (!dereferencedSchema)
+                {
+                    console.warn(
+                        "WARNING: The JSON file is not associated with a JSON schema. " +
+                        "Using a schema gives many advantages (stronger typing, Intellisense support and more).\n" +
+                        "An seed schema can be generated using one of the many online JSON schema generators\n" +
+                        "The JSON file is associated with its schema by setting the $schema property.\n" +
+                        ""
+                    );
+                }
+
                 try
                 {
                     if (err)
@@ -121,8 +142,14 @@ export class JsonConst
                     }
                     else if (language.toLowerCase() === 'typescript')
                     {
-                        var gen = new typescript.GenerateTypescript();
-                        var code = gen.generate(dereferencedSchema, jsonInstance);
+                        var tsgen = new typescript.GenerateTypescript();
+                        var code = tsgen.generate(dereferencedSchema, jsonInstance, _namespace);
+                        callback(null, code);
+                    }
+                    else if (language.toLowerCase() === 'csharp' || language.toLowerCase() === 'c#')
+                    {
+                        var csgen = new csharp.GenerateCSharp();
+                        var code = csgen.generate(dereferencedSchema, jsonInstance, _namespace, rootName);
                         callback(null, code);
                     }
                     else
