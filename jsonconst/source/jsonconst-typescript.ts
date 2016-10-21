@@ -8,10 +8,9 @@ export class GenerateTypescript
     ): string
     {
         var filecontents = "";
-        filecontents = filecontents + "{\n";
         filecontents = filecontents + this.generateClasses(schema) + "\n";
-        filecontents = filecontents + this.generateInstance(schema, instance, "Root") + "\n";
-        filecontents = filecontents + "    export var root = new Root();" + "\n";
+        filecontents = filecontents + this.generateInstances(schema, instance) + "\n";
+        filecontents = filecontents + "    export default " + this.createValueExpresssion(schema, instance) + ";" + "\n";
 
         return filecontents;
     }
@@ -90,18 +89,16 @@ export class GenerateTypescript
             result = result + "         * " + description + "\n";
         result = result + "         */" + "\n";
 
+        result = result + "        public abstract get " + propname + "(): " + this.getTypename(propSchema) + ";" + "\n";
+
+        // remember to generate code for referenced typess:
         switch (propSchema.getKind())
         {
             case jsonconstSchema.SchemaKind.arrayKind:
-                result = result + "        public abstract get " + propname + "(): " + this.getTypename(propSchema) + "[];" + "\n";
                 this.schemas.push(propSchema.getItems());
                 break;
             case jsonconstSchema.SchemaKind.objectKind:
-                result = result + "        public abstract get " + propname + "(): " + this.getTypename(propSchema) + ";" + "\n";
                 this.schemas.push(propSchema);
-                break;
-            default:
-                result = result + "        public abstract get " + propname + "(): " + this.getTypename(propSchema) + ";" + "\n";
                 break;
         }
 
@@ -110,41 +107,51 @@ export class GenerateTypescript
 
     private getTypename(schema: jsonconstSchema.ISchema)
     {
-        var typeKind = schema.getKind();
-
-        if (typeKind == jsonconstSchema.SchemaKind.stringKind)
+        switch (schema.getKind())
         {
-            return "string";
+            case jsonconstSchema.SchemaKind.booleanKind:
+                return "boolean";
+            case jsonconstSchema.SchemaKind.integerKind:
+                return "number";
+            case jsonconstSchema.SchemaKind.numberKind:
+                return "number";
+            case jsonconstSchema.SchemaKind.stringKind:
+                return "string";
+            case jsonconstSchema.SchemaKind.arrayKind:
+                return this.getTypename(schema.getItems()) + "[]";
+            case jsonconstSchema.SchemaKind.objectKind:
+                return schema.getClassname();
+            default:
+                return "<unknown>";
         }
-
-        if (typeKind == jsonconstSchema.SchemaKind.arrayKind)
-        {
-            return this.getTypename(schema.getItems());
-        }
-
-        if (typeKind == jsonconstSchema.SchemaKind.objectKind)
-        {
-            return schema.getClassname();
-        }
-
-        return "<unknown>";
     }
 
-    private _instanceNo = 1;
-    private uniqueInstanceClassName(schema: jsonconstSchema.ISchema): string
+    private generateInstances(rootSchema: jsonconstSchema.ISchema, rootInstance: any): string
     {
-        return schema.getClassname() + this._instanceNo++;
+        this.instances.push({ schema: rootSchema, value: rootInstance });
+
+        var result = "";
+        while (this.instances.length > 0)
+        {
+            var nextInstance = this.instances.shift();
+            result = result + this._generateInstance(nextInstance.schema, nextInstance.value);
+        }
+
+        return result;
     }
 
-    private generateInstance(schema: jsonconstSchema.ISchema, instance: any, classname: string): string
+    private instances: { schema: jsonconstSchema.ISchema, value: any }[] = [];
+    private _generateInstance(schema: jsonconstSchema.ISchema, instance: any): string
     {
-        var result = "    class " + classname + " extends " + this.getTypename(schema) + "\n";
+        var result = "    class " + this.getInstanceClassname(schema, instance) + " extends " + schema.getClassname() + "\n";
         result = result + "    {" + "\n";
 
-        var instances: { name: string, schema: jsonconstSchema.ISchema, value: any }[] = [];
         for (var propname in instance)
         {
             if (propname === '$schema')
+                continue;
+
+            if (propname === '$classname')
                 continue;
 
             var propSchema = schema.getPropertySchema(propname);
@@ -153,52 +160,60 @@ export class GenerateTypescript
             if (!propSchema)
                 continue;
 
-            if (propSchema.getKind() == jsonconstSchema.SchemaKind.arrayKind)
-            {
-                result = result + "        public get " + propname + "(): " + this.getTypename(propSchema) + "[] { return [" + "\n";
-                var arr: any[] = propValue as any[];
-                var itemSchema = propSchema.getItems();
-                if (arr && itemSchema)
-                {
-                    for (var m = 0; m < arr.length; m++)
-                    {
-                        var propertyClassName: string = this.uniqueInstanceClassName(itemSchema);
-                        result = result + "            new " + propertyClassName + "()," + "\n";
-                        instances.push({ name: propertyClassName, schema: itemSchema, value: arr[m] });
-                    }
-                }
-                result = result + "        ];}" + "\n";
-            }
-            else if (propSchema.getKind() === jsonconstSchema.SchemaKind.objectKind)
-            {
-                var propertyClassName: string = this.uniqueInstanceClassName(propSchema);
-                result = result + "        public get " + propname + "(): " + this.getTypename(propSchema) + "\n";
-                result = result + "        {\n";
-                result = result + "            return new " + propertyClassName + "();\n";
-                result = result + "        }\n";
-
-                instances.push({ name: propertyClassName, schema: propSchema, value: propValue });
-            }
-            else if (propSchema.getKind() === jsonconstSchema.SchemaKind.stringKind)
-            {
-                result = result + "        public get " + propname + "(): " + this.getTypename(propSchema) + "\n";
-                result = result + "        {\n";
-                result = result + "            return '" + propValue + "';\n";
-                result = result + "        }\n";
-            }
-            else
-            {
-            }
+            result = result + "        public get " + propname + "(): " + this.getTypename(propSchema) + "\n";
+            result = result + "        {\n";
+            result = result + "            return " + this.createValueExpresssion(propSchema, propValue) + ";\n";
+            result = result + "        }\n";
         }
 
         result = result + "    }" + "\n";
         result = result + "" + "\n";
 
-        for (var n = 0; n < instances.length; n++)
-        {
-            result = result + this.generateInstance(instances[n].schema, instances[n].value, instances[n].name);
-        }
-
         return result;
+    }
+
+    private createValueExpresssion(schema: jsonconstSchema.ISchema, instance: any): string
+    {
+        var result = "";
+
+        switch (schema.getKind())
+        {
+            case jsonconstSchema.SchemaKind.arrayKind:
+                result = result + "[";
+                var memberInstances: any[] = instance as any[];
+                var memberSchema = schema.getItems();
+                if (memberInstances && memberSchema)
+                {
+                    for (var m = 0; m < memberInstances.length; m++)
+                    {
+                        result = result + this.createValueExpresssion(memberSchema, memberInstances[m]) + ", ";
+                        //this.instances.push({ schema: memberSchema, value: memberInstances[m] });
+                    }
+                }
+                result = result + "]";
+                return result;
+            case jsonconstSchema.SchemaKind.objectKind:
+                this.instances.push({ schema: schema, value: instance });
+                return "new " + this.getInstanceClassname(schema, instance) + "()";
+            case jsonconstSchema.SchemaKind.booleanKind:
+                return (instance ? "true" : "false");
+            case jsonconstSchema.SchemaKind.numberKind:
+                return instance;
+            case jsonconstSchema.SchemaKind.integerKind:
+                return instance;
+            case jsonconstSchema.SchemaKind.stringKind:
+                return '"' + instance + '"';
+            default:
+                return "unsupported value";
+        }
+    }
+
+    private _instanceNo = 1;
+    private getInstanceClassname(schema: jsonconstSchema.ISchema, instance: Object): string
+    {
+        if (!instance["$classname"])
+            instance["$classname"] = schema.getClassname() + this._instanceNo++;
+
+        return instance["$classname"];
     }
 }

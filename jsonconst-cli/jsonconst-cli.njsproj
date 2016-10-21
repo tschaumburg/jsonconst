@@ -35,14 +35,27 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <Content Include="node_modules\jsonconst\dist\jsonconst-schema.js.map" />
+    <Content Include="node_modules\jsonconst\dist\jsonconst-typescript.js.map" />
+    <Content Include="node_modules\jsonconst\dist\jsonconst.js.map" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-schema.d.ts" />
+    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-typescript.d.ts" />
+    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="node_modules\jsonconst\" />
+    <Folder Include="node_modules\jsonconst\dist\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\node\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="node_modules\jsonconst\dist\jsonconst-schema.js" />
+    <Compile Include="node_modules\jsonconst\dist\jsonconst-typescript.js" />
+    <Compile Include="node_modules\jsonconst\dist\jsonconst.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
