@@ -1,5 +1,5 @@
 {
-    "$schema": "./testSchema.json?reload",
+    "$schema": "./album.schema.json?reload",
     "name": "Album 1",
     "images": [
         {

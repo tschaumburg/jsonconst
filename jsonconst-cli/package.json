@@ -1,9 +1,21 @@
 {
-  "name": "jsonconst-cli",
-  "version": "0.0.0",
-  "description": "jsonconst-cli",
-  "main": "app.js",
-  "author": {
-    "name": "Thomas"
-  }
+    "name": "jsonconst-cli",
+    "version": "0.0.0",
+    "description": "jsonconst-cli",
+    "main": "app.js",
+    "author": {
+        "name": "Thomas Schaumburg",
+        "email": "thomas@schaumburg-it.dk"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tschaumburg/jsonconst.git"
+    },
+    "bin": {
+        "jsonconst": "./app.js"
+    },
+    "dependencies": {
+        "commander": "^2.9.0",
+        "jsonconst": "^0.0.3"
+    }
 }

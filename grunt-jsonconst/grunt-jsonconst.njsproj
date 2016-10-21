@@ -46,7 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gruntfile.js" />
-    <Compile Include="tasks\jsonconst.js" />
+    <Compile Include="node_modules\jsonconst\dist\jsonconst-schema.js" />
+    <Compile Include="node_modules\jsonconst\dist\jsonconst-typescript.js" />
+    <Compile Include="node_modules\jsonconst\dist\jsonconst.js" />
+    <Compile Include="tasks\grunt_jsonconst.js" />
     <Compile Include="test\jsonconst_test.js" />
   </ItemGroup>
   <ItemGroup>

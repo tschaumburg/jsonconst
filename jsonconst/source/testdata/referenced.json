@@ -1,6 +1,0 @@
-﻿{
-    "name": "root test node",
-    "sub": {
-        "$ref": "./referenced2.json#"
-    }
-}

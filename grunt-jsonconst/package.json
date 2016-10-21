@@ -39,6 +39,6 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "jsonconst": "0.0.2"
+    "jsonconst": "0.0.3"
   }
 }

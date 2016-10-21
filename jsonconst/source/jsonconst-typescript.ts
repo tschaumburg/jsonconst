@@ -9,15 +9,29 @@ export class GenerateTypescript
     {
         var filecontents = "";
         filecontents = filecontents + "{\n";
-        filecontents = filecontents + this.generateClass(schema) + "\n";
+        filecontents = filecontents + this.generateClasses(schema) + "\n";
         filecontents = filecontents + this.generateInstance(schema, instance, "Root") + "\n";
         filecontents = filecontents + "    export var root = new Root();" + "\n";
 
         return filecontents;
     }
 
+    private generateClasses(rootSchema: jsonconstSchema.ISchema): string
+    {
+        this.schemas.push(rootSchema);
+
+        var result = "";
+        while (this.schemas.length > 0)
+        {
+            var nextSchema = this.schemas.shift();
+            result = result + this._generateClass(nextSchema);
+        }
+
+        return result;
+    }
+
     private schemas: jsonconstSchema.ISchema[] = [];
-    private generateClass(schema: jsonconstSchema.ISchema): string
+    private _generateClass(schema: jsonconstSchema.ISchema): string
     {
         var result = "";
 
@@ -60,11 +74,6 @@ export class GenerateTypescript
 
         result = result + "    }" + "\n";
         result = result + "" + "\n";
-
-        for (var n = 0; n < this.schemas.length; n++)
-        {
-            result = result + this.generateClass(this.schemas[n]);
-        }
 
         return result;
     }

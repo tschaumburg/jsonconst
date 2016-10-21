@@ -12,6 +12,7 @@ const path = require('path');
  */
 export class JsonConst
 {
+    public xx = 5;
     /**
      * Resolves a JSON reference and loads the referenced JSON
      * @param jsonPointer The reference string being resolved.
@@ -140,4 +141,6 @@ export class JsonConst
     }
 }
 var jsonconst: JsonConst = new JsonConst();
-export default jsonconst
+const tmp: number = 4;
+export default jsonconst;
+

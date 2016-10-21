@@ -30,13 +30,18 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     jsonconst: {
-      default_options: {
-        options: {
+        empty: {
+            options: {
+            },
+            src: ['C:\\Users\\Thomas\\Source\\Repos\\jsonconst\\jsonconst\\source\\testdata\\testValues.json']
         },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
+        default_options: {
+            options: {
+            },
+            files: [
+                'tmp/default_options'
+            ]
+        },
       custom_options: {
         options: {
           separator: ': ',

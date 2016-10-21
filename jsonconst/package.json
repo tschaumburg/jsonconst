@@ -1,13 +1,14 @@
 {
   "name": "jsonconst",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "jsonconst",
   "main": "dist/jsonconst.js",
-  "files": [
-    "dist/jsonconst.js",
-    "dist/jsonconst-schema.js",
-    "dist/jsonconst-typescript.js"
-  ],
+    "files": [
+        "dist/jsonconst.js",
+        "dist/jsonconst.d.ts",
+        "dist/jsonconst-schema.js",
+        "dist/jsonconst-typescript.js"
+    ],
   "author": {
     "name": "Thomas Schaumburg",
     "email": "thomas@schaumburg-it.dk"
