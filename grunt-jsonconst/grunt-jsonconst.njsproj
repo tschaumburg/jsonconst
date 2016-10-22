@@ -41,8 +41,8 @@
     <Content Include="README.md" />
     <Content Include="test\expected\custom_options" />
     <Content Include="test\expected\default_options" />
-    <Content Include="test\fixtures\123" />
-    <Content Include="test\fixtures\testing" />
+    <Content Include="test\fixtures\photoalbum.json" />
+    <Content Include="test\fixtures\photoalbum.schema.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Gruntfile.js" />

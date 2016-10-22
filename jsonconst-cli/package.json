@@ -1,7 +1,7 @@
 {
     "name": "jsonconst-cli",
-    "version": "0.0.0",
-    "description": "jsonconst-cli",
+    "version": "0.0.4",
+    "description": "Command converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions",
     "main": "app.js",
     "author": {
         "name": "Thomas Schaumburg",
@@ -16,6 +16,6 @@
     },
     "dependencies": {
         "commander": "^2.9.0",
-        "jsonconst": "^0.0.3"
+        "jsonconst": ">=0.0.3"
     }
 }

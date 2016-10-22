@@ -1,6 +1,6 @@
 /*
  * grunt-jsonconst
- * https://github.com/Thomas/grunt-jsonconst
+ * https://github.com/tschaumburg/jsonconst
  *
  * Copyright (c) 2016 tschaumburg
  * Licensed under the MIT license.
@@ -30,10 +30,13 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     jsonconst: {
-        empty: {
+        photoalbum: {
             options: {
+                language: 'c#',
+                namespace: 'x',
+                rootname: 'y'
             },
-            src: ['C:\\Users\\Thomas\\Source\\Repos\\jsonconst\\jsonconst\\source\\testdata\\testValues.json']
+            src: ['test/fixtures/photoalbum.json'],
         },
         default_options: {
             options: {

@@ -143,7 +143,7 @@ export class JsonConst
                     else if (language.toLowerCase() === 'typescript')
                     {
                         var tsgen = new typescript.GenerateTypescript();
-                        var code = tsgen.generate(dereferencedSchema, jsonInstance, _namespace);
+                        var code = tsgen.generate(dereferencedSchema, jsonInstance, _namespace, rootName);
                         callback(null, code);
                     }
                     else if (language.toLowerCase() === 'csharp' || language.toLowerCase() === 'c#')

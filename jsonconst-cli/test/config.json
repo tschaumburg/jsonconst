@@ -1,0 +1,117 @@
+{
+    "$schema": "config.schema.json?reload",
+    "configName": "Debug",
+    "logServer": {
+        "disable": false,
+        "url": "https://localhost/SuperDup.Log/api/log",
+        "logging": {
+            "disable": false,
+            "level": "WARNING",
+            "connectionstring": "ref til web.config",
+            "filters": [
+                {
+                    "appname": "webadmin",
+                    "module": "auth.oidc-client",
+                    "level": "VERBOSE"
+                }
+            ]
+        },
+        "security": {
+            "requireHTTPS": true,
+            "CORS": {
+                "enable": true,
+                "allowedOrigins": [
+                    {
+                        "origin": "https://mywebserver.com",
+                        "id": "webadmin"
+                    }
+                ]
+            },
+            "ClientCertificates": {
+                "enable": true,
+                "allowedCertificates": [
+                    {
+                        "thumbprint": "0123456789ABCDEF...",
+                        "id": "api"
+                    }
+                ]
+            },
+            "OAuthClientCredentials": {
+                "enable": true,
+                "allowedClientCredentials": [
+                    {
+                        "issuer": "https://myauthserver.com",
+                        "clientID": "my-allowed-client",
+                        "id": "fancyschmanzy"
+                    }
+                ]
+            }
+        }
+    },
+    "authserver": {
+        "selectedProvider": "identityserver3",
+        "identityserver3": {
+            "issuerUri": "https://localhost/SuperDup.Auth"
+        },
+        "auth0": {
+            "issuerUri": "https://login.microsoftonline.com/",
+            "tenant": "schaumburgit.auth0.com"
+        },
+        "azureAD": {
+            "issuerUri": "https://login.microsoftonline.com/",
+            "tenant": "thomasschaumburgit.onmicrosoft.com"
+        }
+    },
+    "superdup": {
+        "url": "https://localhost/SuperDup.API/api/admin",
+        "authresource": {
+            "azureAD": {
+                "AppIdUri": "https://localhost/Superdup.API",
+                "securedUrl": "https://localhost/SuperDup.API/api/admin",
+                "allowedClientIds": [ "d67613ac-0b0b-45c9-b389-d2df2eb8a3e8" ],
+                "adGroupNames": {
+                    "adminGroup": "55e5a171-81be-4196-b09c-acfaf4bfb0c3",
+                    "test": "xx"
+                }
+            },
+            "identityserver3": {
+                "securedUrl": "https://localhost/SuperDup.API/api/admin"
+            }
+        }
+    },
+    "webadmin": {
+        "url": "https://localhost/SuperDup.WebAdmin",
+        "authclient": {
+            "disable": false,
+            "identityserver3": {
+                "redirectUri": "https://localhost/SuperDup.WebAdmin/index.html",
+                "post_logout_redirect_uri": "http://localhost/SuperDup.WebAdmin/index.html",
+                "clientId": "webadminui",
+                "requireScopes": "openid profile roles apiscope"
+            },
+            "auth0": {
+                "clientId": "O6dRGzlPhkcngjq1peo2QwG3tlAx0WDa",
+                "clientSecret": "1aeeg5yVrcW2g-fcy3WC-DKH5UoV6GkhNF-tgZijlqJDRM2hGU3ZONpyP2RvIdcm"
+            },
+            "azureAD": {
+                "clientId": "d67613ac-0b0b-45c9-b389-d2df2eb8a3e8"
+            }
+        },
+        "log": {
+            "appName": "WebAdmin",
+            "local": {
+                "level": "SILLY"
+            },
+            "remote": {
+                "refreshIntervalMinutes": 0.5,
+                "reconnectIntervalMinutes": 2,
+                "maxQueuedErrors": 10,
+                "maxQueued": 100,
+                "maxDelaySecondsFatal": 0,
+                "maxDelaySecondsError": 2,
+                "maxDelaySecondsWarning": 10,
+                "maxDelaySeconds": 300
+            }
+        }
+    }
+}

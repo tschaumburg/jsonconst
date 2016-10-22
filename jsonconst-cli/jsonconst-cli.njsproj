@@ -5,7 +5,7 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>jsonconst-cli</Name>
     <RootNamespace>jsonconst-cli</RootNamespace>
-    <ScriptArguments>"C:\Users\Thomas\Source\Repos\jsonconst\jsonconst\source\testdata\album.json" -l csharp</ScriptArguments>
+    <ScriptArguments>"test/config.json" -l typescript</ScriptArguments>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -34,31 +34,22 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="test\schema\apiserver.schema.json" />
+    <Content Include="test\schema\authentication\serverinfo.schema.json" />
+    <Content Include="test\schema\logserver.schema.json" />
+    <Content Include="test\schema\superdup-config.schema.json" />
+    <Content Include="test\config.json" />
+    <Content Include="test\config.schema.json" />
     <TypeScriptCompile Include="app.ts" />
-    <Content Include="node_modules\jsonconst\dist\jsonconst-csharp.js.map" />
-    <Content Include="node_modules\jsonconst\dist\jsonconst-schema.js.map" />
-    <Content Include="node_modules\jsonconst\dist\jsonconst-typescript.js.map" />
-    <Content Include="node_modules\jsonconst\dist\jsonconst.js.map" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-csharp.d.ts" />
-    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-schema.d.ts" />
-    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst-typescript.d.ts" />
-    <TypeScriptCompile Include="node_modules\jsonconst\dist\jsonconst.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\node\node.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="node_modules\jsonconst\" />
-    <Folder Include="node_modules\jsonconst\dist\" />
+    <Folder Include="test\" />
     <Folder Include="Scripts\" />
     <Folder Include="Scripts\typings\" />
     <Folder Include="Scripts\typings\node\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="node_modules\jsonconst\dist\jsonconst-csharp.js" />
-    <Compile Include="node_modules\jsonconst\dist\jsonconst-schema.js" />
-    <Compile Include="node_modules\jsonconst\dist\jsonconst-typescript.js" />
-    <Compile Include="node_modules\jsonconst\dist\jsonconst.js" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

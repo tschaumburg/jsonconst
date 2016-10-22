@@ -1,0 +1,10 @@
+{
+    "$schema": "./photoalbum.schema.json?reload",
+    "name": "Album 1",
+    "images": [
+        {
+            "date": "March 72",
+            "photographer": "Thomas"
+        }
+    ]
+}

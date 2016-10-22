@@ -20,7 +20,7 @@ export class GenerateCSharp
         filecontents = filecontents + this.generateInstances(schema, instance) + "\n";
 
         rootName = rootName || "root";
-        filecontents = filecontents + "    const " + this.getTypename(schema) + " " + rootName + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n";
+        filecontents = filecontents + "    public const " + this.getTypename(schema) + " " + rootName + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n";
 
         if (_namespace)
         {

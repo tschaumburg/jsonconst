@@ -1,0 +1,447 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "configName": {
+            "type": "string"
+        },
+        "logServer": {
+            "type": "object",
+            "properties": {
+                "disable": {
+                    "type": "boolean"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "logging": {
+                    "type": "object",
+                    "properties": {
+                        "disable": {
+                            "type": "boolean"
+                        },
+                        "level": {
+                            "type": "string"
+                        },
+                        "connectionstring": {
+                            "type": "string"
+                        },
+                        "filters": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "appname": {
+                                        "type": "string"
+                                    },
+                                    "module": {
+                                        "type": "string"
+                                    },
+                                    "level": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "appname",
+                                    "module",
+                                    "level"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "disable",
+                        "level",
+                        "connectionstring",
+                        "filters"
+                    ]
+                },
+                "security": {
+                    "type": "object",
+                    "properties": {
+                        "requireHTTPS": {
+                            "type": "boolean"
+                        },
+                        "CORS": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean"
+                                },
+                                "allowedOrigins": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "origin": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "origin",
+                                            "id"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "enable",
+                                "allowedOrigins"
+                            ]
+                        },
+                        "ClientCertificates": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean"
+                                },
+                                "allowedCertificates": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "thumbprint": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "thumbprint",
+                                            "id"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "enable",
+                                "allowedCertificates"
+                            ]
+                        },
+                        "OAuthClientCredentials": {
+                            "type": "object",
+                            "properties": {
+                                "enable": {
+                                    "type": "boolean"
+                                },
+                                "allowedClientCredentials": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "issuer": {
+                                                "type": "string"
+                                            },
+                                            "clientID": {
+                                                "type": "string"
+                                            },
+                                            "id": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "issuer",
+                                            "clientID",
+                                            "id"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "enable",
+                                "allowedClientCredentials"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "requireHTTPS",
+                        "CORS",
+                        "ClientCertificates",
+                        "OAuthClientCredentials"
+                    ]
+                }
+            },
+            "required": [
+                "disable",
+                "url",
+                "logging",
+                "security"
+            ]
+        },
+        "authserver": {
+            "type": "object",
+            "properties": {
+                "selectedProvider": {
+                    "type": "string"
+                },
+                "identityserver3": {
+                    "type": "object",
+                    "properties": {
+                        "issuerUri": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "issuerUri"
+                    ]
+                },
+                "auth0": {
+                    "type": "object",
+                    "properties": {
+                        "issuerUri": {
+                            "type": "string"
+                        },
+                        "tenant": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "issuerUri",
+                        "tenant"
+                    ]
+                },
+                "azureAD": {
+                    "type": "object",
+                    "properties": {
+                        "issuerUri": {
+                            "type": "string"
+                        },
+                        "tenant": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "issuerUri",
+                        "tenant"
+                    ]
+                }
+            },
+            "required": [
+                "selectedProvider",
+                "identityserver3",
+                "auth0",
+                "azureAD"
+            ]
+        },
+        "superdup": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "authresource": {
+                    "type": "object",
+                    "properties": {
+                        "azureAD": {
+                            "type": "object",
+                            "properties": {
+                                "AppIdUri": {
+                                    "type": "string"
+                                },
+                                "securedUrl": {
+                                    "type": "string"
+                                },
+                                "allowedClientIds": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "adGroupNames": {
+                                    "type": "object",
+                                    "properties": {
+                                        "adminGroup": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "adminGroup"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "AppIdUri",
+                                "securedUrl",
+                                "allowedClientIds",
+                                "adGroupNames"
+                            ]
+                        },
+                        "identityserver3": {
+                            "type": "object",
+                            "properties": {
+                                "securedUrl": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "securedUrl"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "azureAD",
+                        "identityserver3"
+                    ]
+                }
+            },
+            "required": [
+                "url",
+                "authresource"
+            ]
+        },
+        "webadmin": {
+            "type": "object",
+            "properties": {
+                "url": {
+                    "type": "string"
+                },
+                "authclient": {
+                    "type": "object",
+                    "properties": {
+                        "disable": {
+                            "type": "boolean"
+                        },
+                        "identityserver3": {
+                            "type": "object",
+                            "properties": {
+                                "redirectUri": {
+                                    "type": "string"
+                                },
+                                "post_logout_redirect_uri": {
+                                    "type": "string"
+                                },
+                                "clientId": {
+                                    "type": "string"
+                                },
+                                "requireScopes": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "redirectUri",
+                                "post_logout_redirect_uri",
+                                "clientId",
+                                "requireScopes"
+                            ]
+                        },
+                        "auth0": {
+                            "type": "object",
+                            "properties": {
+                                "clientId": {
+                                    "type": "string"
+                                },
+                                "clientSecret": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "clientId",
+                                "clientSecret"
+                            ]
+                        },
+                        "azureAD": {
+                            "type": "object",
+                            "properties": {
+                                "clientId": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "clientId"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "disable",
+                        "identityserver3",
+                        "auth0",
+                        "azureAD"
+                    ]
+                },
+                "log": {
+                    "type": "object",
+                    "properties": {
+                        "appName": {
+                            "type": "string"
+                        },
+                        "local": {
+                            "type": "object",
+                            "properties": {
+                                "level": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "level"
+                            ]
+                        },
+                        "remote": {
+                            "type": "object",
+                            "properties": {
+                                "refreshIntervalMinutes": {
+                                    "type": "number"
+                                },
+                                "reconnectIntervalMinutes": {
+                                    "type": "integer"
+                                },
+                                "maxQueuedErrors": {
+                                    "type": "integer"
+                                },
+                                "maxQueued": {
+                                    "type": "integer"
+                                },
+                                "maxDelaySecondsFatal": {
+                                    "type": "integer"
+                                },
+                                "maxDelaySecondsError": {
+                                    "type": "integer"
+                                },
+                                "maxDelaySecondsWarning": {
+                                    "type": "integer"
+                                },
+                                "maxDelaySeconds": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "refreshIntervalMinutes",
+                                "reconnectIntervalMinutes",
+                                "maxQueuedErrors",
+                                "maxQueued",
+                                "maxDelaySecondsFatal",
+                                "maxDelaySecondsError",
+                                "maxDelaySecondsWarning",
+                                "maxDelaySeconds"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "appName",
+                        "local",
+                        "remote"
+                    ]
+                }
+            },
+            "required": [
+                "url",
+                "authclient",
+                "log"
+            ]
+        }
+    },
+    "required": [
+        "$schema",
+        "configName",
+        "logServer",
+        "authserver",
+        "superdup",
+        "webadmin"
+    ]
+}

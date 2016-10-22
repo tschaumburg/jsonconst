@@ -1,14 +1,17 @@
 {
     "name": "jsonconst",
-    "version": "0.0.4",
-    "description": "Converts a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions",
+    "version": "0.0.9",
+    "description": "Library converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions",
     "main": "dist/jsonconst.js",
     "files": [
         "dist/jsonconst.js",
         "dist/jsonconst.d.ts",
         "dist/jsonconst-schema.js",
+        "dist/jsonconst-schema.d.ts",
         "dist/jsonconst-typescript.js",
-        "dist/jsonconst-csharp.js"
+        "dist/jsonconst-typescript.d.ts",
+        "dist/jsonconst-csharp.js",
+        "dist/jsonconst-csharp.d.ts"
     ],
     "author": {
         "name": "Thomas Schaumburg",

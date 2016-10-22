@@ -33,6 +33,8 @@ program
 
 function generate(jsonfile, language, namespace, rootName)
 {
+    var finish: boolean = false;
+
     try
     {
         new jsonconst.JsonConst().generate(
@@ -44,20 +46,22 @@ function generate(jsonfile, language, namespace, rootName)
             {
                 if (code)
                     console.log(code);
+
                 if (err)
-                    console.log(err);
+                    console.error(err);
+
+                finish = true;
             }
         );
     }
     catch (err)
     {
         console.log("err " + JSON.stringify(err));
-        //finish = true;
+        finish = true;
     }
 
-    var finish: boolean = false;
     (function wait()
     {
-        if (!finish) setTimeout(wait, 1000);
+        if (!finish) setTimeout(wait, 500);
     })();
 }

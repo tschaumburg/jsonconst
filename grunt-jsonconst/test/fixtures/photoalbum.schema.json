@@ -1,0 +1,45 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$classname": "PhotoAlbum",
+    "type": "object",
+    "title": "Photo album metadata",
+    "description": "Describes a photo album, and metadata about the images in it",
+    "properties": {
+        "name": {
+            "type": "string",
+            "title": "Album name",
+            "description": "The name of the photo album"
+        },
+        "images": {
+            "type": "array",
+            "title": "Photos in the album",
+            "description": "Describes each of the photos in the album",
+            "items": {
+                "type": "object",
+                "$classname": "ImageMetaData",
+                "title": "0 schema.",
+                "description": "An explanation about the purpose of this instance.",
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "title": "Date schema.",
+                        "description": "An explanation about the purpose of this instance."
+                    },
+                    "photographer": {
+                        "type": "string",
+                        "title": "Photographer schema.",
+                        "description": "An explanation about the purpose of this instance."
+                    }
+                },
+                "required": [
+                    "date",
+                    "photographer"
+                ]
+            }
+        }
+    },
+    "required": [
+        "name",
+        "images"
+    ]
+}

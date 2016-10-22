@@ -80,6 +80,9 @@ class Schema implements ISchema
             return null;
 
         var jsonSchema = this._verbatim.properties[propertyName];
+        if (!jsonSchema)
+            return null;
+
         return new Schema(jsonSchema);
     }
 
