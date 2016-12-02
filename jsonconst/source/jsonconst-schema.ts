@@ -17,9 +17,12 @@ export interface ISchema
     getKind(): SchemaKind;
     getPropertyNames(): string[];
     getPropertySchema(propertyName: string): ISchema;
+    isPropertyOverride(propertyName: string): boolean;
     getItems(): ISchema;
 
-    getClassname(): string;
+    getInterfaceName(): string;
+    getClassName(jsonInstance: {}): string;
+    getBaseclassName(): string;
     getGenerating() : boolean;
     setGenerating(value: boolean);
 }
@@ -86,6 +89,18 @@ class Schema implements ISchema
         return new Schema(jsonSchema);
     }
 
+    public isPropertyOverride(propertyName: string): boolean
+    {
+        if (!this._verbatim.properties)
+            return false;
+
+        var jsonSchema = this._verbatim.properties[propertyName];
+        if (!jsonSchema)
+            return false;
+
+        return !!(jsonSchema.$override);
+    }
+
     public getItems(): ISchema
     {
         if (!this._verbatim.items)
@@ -94,15 +109,39 @@ class Schema implements ISchema
         return new Schema(this._verbatim.items);
     };
 
-    public getClassname(): string
+    public getInterfaceName(): string
     {
         if (this.getKind() !== SchemaKind.objectKind)
             return "unknown";
 
-        if (!this._verbatim.$classname)
-            this._verbatim.$classname = Schema.uniqueClassName();
+        if (!this._verbatim.$interface)
+            this._verbatim.$interface = Schema.uniqueClassName();
 
-        return this._verbatim.$classname;
+        return this._verbatim.$interface;
+    }
+
+    public getClassName(jsonInstance: {}): string
+    {
+        if (this.getKind() !== SchemaKind.objectKind)
+            return "unknown";
+
+        if (!this._verbatim.$class)
+            this._verbatim.$class = Schema.uniqueClassName();
+
+        return this.expandTemplate(this._verbatim.$class, jsonInstance);
+    }
+
+    public getBaseclassName(): string
+    {
+        if (this.getKind() !== SchemaKind.objectKind)
+            return null;
+
+        return this._verbatim.$baseclass;
+    }
+
+    private expandTemplate(template: string, values: Object): string
+    {
+        return template.replace("{claimName}", values["claimName"]);
     }
 
     private static _classNo = 1;
@@ -124,29 +163,44 @@ class Schema implements ISchema
 
 //parser.$refs._root$Ref.path
 var $RefParser = require('json-schema-ref-parser');
+const commentedJsonParser = require('./commented-json-parser');
 class SchemaManager implements ISchemaManager
 {
-    public getSchemaInfo(schema: Object, callback: (err, schemainfo: ISchema) => void): void
+    public getSchemaInfo(dereferencedSchema: Object, callback: (err, schemainfo: ISchema) => void): void
     {
-        if (!schema)
+        if (!dereferencedSchema)
             return callback(null, null);
 
-        $RefParser.dereference(schema, null, function (err, dereferencedSchema)
-        {
-            if (err)
-            {
-                callback(err, null);
-            }
-            else
-            {
-                var jsonSchema = dereferencedSchema as JSONSchema;
+        var jsonSchema = dereferencedSchema as JSONSchema;
 
-                if (!jsonSchema)
-                    callback("Malformed schema: " + JSON.stringify(schema), null);
+        if (!jsonSchema)
+            callback("Malformed schema: " + JSON.stringify(dereferencedSchema), null);
 
-                callback(null, new Schema(jsonSchema));
-            }
-        });
+        callback(null, new Schema(jsonSchema));
+
+        return;
+
+        //var options = {
+        //    parse: {
+        //        json: commentedJsonParser
+        //    }
+        //};
+        //$RefParser.dereference(dereferencedSchema, options, function (err, dereferencedSchema2)
+        //{
+        //    if (err)
+        //    {
+        //        callback(err, null);
+        //    }
+        //    else
+        //    {
+        //        var jsonSchema = dereferencedSchema2 as JSONSchema;
+
+        //        if (!jsonSchema)
+        //            callback("Malformed schema: " + JSON.stringify(dereferencedSchema), null);
+
+        //        callback(null, new Schema(jsonSchema));
+        //    }
+        //});
     }
 }
 
@@ -160,7 +214,10 @@ class JSONSchema
     //public generating?: boolean;
     public properties?: { [name: string]: JSONSchema; };
     public $schema?: string;
-    public $classname?: string;
+    public $class?: string;
+    public $interface?: string;
+    public $baseclass?: string;
+    public $override?: boolean;
     public required?: string[];
 }
 
@@ -183,7 +240,7 @@ var testSchema: JSONSchema = {
             "title": "Images schema.",
             "description": "An explanation about the purpose of this instance.",
             "items": {
-                "$classname": "ImageMetaData",
+                "$class": "ImageMetaData",
                 "type": "object",
                 "title": "0 schema.",
                 "description": "An explanation about the purpose of this instance.",

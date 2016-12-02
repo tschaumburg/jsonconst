@@ -1,44 +1,43 @@
 {
-    "name": "grunt-jsonconst",
-    "description": "Grunt plugin converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions.",
-    "version": "0.0.2",
-    "homepage": "https://github.com/tschaumburg/jsonconst",
-    "author": {
-        "name": "Thomas Schaumburg",
-        "email": "thomas@schaumburg-it.dk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tschaumburg/jsonconst.git"
-    },
-    "bugs": {
-        "url": "https://github.com/tschaumburg/jsonconst/issues"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "https://github.com/tschaumburg/jsonconst/blob/master/LICENSE-MIT"
-        }
-    ],
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "scripts": {
-        "test": "grunt test"
-    },
-    "devDependencies": {
-        "grunt-contrib-jshint": "^0.9.2",
-        "grunt-contrib-clean": "^0.5.0",
-        "grunt-contrib-nodeunit": "^0.3.3",
-        "grunt": "~0.4.5"
-    },
-    "peerDependencies": {
-        "grunt": "~0.4.5"
-    },
-    "keywords": [
-        "gruntplugin"
-    ],
-    "dependencies": {
-        "jsonconst": ">=0.0.3"
+  "name": "grunt-jsonconst",
+  "description": "Grunt plugin converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions.",
+  "version": "0.0.24",
+  "homepage": "https://github.com/tschaumburg/jsonconst",
+  "author": {
+    "name": "Thomas Schaumburg",
+    "email": "thomas@schaumburg-it.dk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tschaumburg/jsonconst.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tschaumburg/jsonconst/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tschaumburg/jsonconst/blob/master/LICENSE-MIT"
     }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt": ">=0.4.5"
+  },
+  "peerDependencies": {
+    "grunt": ">=0.4.5"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "dependencies": {
+    "jsonconst": "0.0.24"
+  }
 }

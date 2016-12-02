@@ -1,0 +1,6 @@
+{
+    "$schema": "circular.schema.json?reload",
+    "pperson": {
+        "name": "a"
+    }
+}

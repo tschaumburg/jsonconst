@@ -35,7 +35,10 @@ module.exports = function (grunt)
             else if (options.language.toLowerCase() === 'csharp' || options.language.toLowerCase() === 'c#')
                 ext = 'cs';
 
-            var jsonpath = path.normalize(f.src);
+            grunt.log.warn('src = ' + f.src[0]);
+            var jsonpath = path.normalize(f.src[0]);
+            grunt.log.warn('jsonpath = ' + jsonpath);
+
             try
             {
                 var outpath = jsonpath.substr(0, jsonpath.lastIndexOf(".")) + "." + ext;
@@ -47,7 +50,7 @@ module.exports = function (grunt)
                     function (err, code)
                     {
                         if (err)
-                            grunt.error.writeln(err);
+                            grunt.log.error(err);
 
                         if (code)
                         {

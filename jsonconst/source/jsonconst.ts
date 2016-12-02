@@ -7,7 +7,8 @@ var $RefParser = require('json-schema-ref-parser');
 var fs = require('fs');
 const url = require('url');
 const path = require('path');
-
+const commentedJsonParser = require('./commented-json-parser');
+var stripJsonComments = require('strip-json-comments');
 /**
  * 
  */
@@ -27,7 +28,7 @@ export class JsonConst
             jsonPointer = jsonPointer.replace(/\?reload$/, ""); // basename
 
             var reference = { $ref: jsonPointer };
-            var options = {};
+            var options = { parse: {json: commentedJsonParser}};
             $RefParser.dereference(
                 baseUrl,
                 reference,
@@ -49,9 +50,9 @@ export class JsonConst
         var _url = url.parse(jsonUrl);
 
         if (!url.protocol)
-            return JSON.parse(fs.readFileSync(jsonUrl, 'utf8'));
+            return JSON.parse(stripJsonComments(fs.readFileSync(jsonUrl, 'utf8').replace(/^\uFEFF/, '')));
         else if (url.protocol === 'file:')
-            return JSON.parse(fs.readFileSync(_url.path, 'utf8'));
+            return JSON.parse(stripJsonComments(fs.readFileSync(_url.path, 'utf8').replace(/^\uFEFF/, '')));
 
         throw new Error("Cannot read JSON file " + jsonUrl);
     }
@@ -111,19 +112,19 @@ export class JsonConst
 
     doGenerate(
         jsonInstance: {},
-        jsonSchema: {},
+        dereferencedSchema: {},
         language: string,
         _namespace: string,
         rootName: string,
         callback: (err, code: string) => void
     ): void
     {
-        var mgr = schema.manager;
+        var mgr = schema.manager; 
         mgr.getSchemaInfo(
-            jsonSchema,
-            function (err, dereferencedSchema: schema.ISchema)
+            dereferencedSchema,
+            function (err, schemaInfo: schema.ISchema)
             {
-                if (!dereferencedSchema)
+                if (!schemaInfo)
                 {
                     console.warn(
                         "WARNING: The JSON file is not associated with a JSON schema. " +
@@ -143,13 +144,13 @@ export class JsonConst
                     else if (language.toLowerCase() === 'typescript')
                     {
                         var tsgen = new typescript.GenerateTypescript();
-                        var code = tsgen.generate(dereferencedSchema, jsonInstance, _namespace, rootName);
+                        var code = tsgen.generate(schemaInfo, jsonInstance, _namespace, rootName);
                         callback(null, code);
                     }
                     else if (language.toLowerCase() === 'csharp' || language.toLowerCase() === 'c#')
                     {
                         var csgen = new csharp.GenerateCSharp();
-                        var code = csgen.generate(dereferencedSchema, jsonInstance, _namespace, rootName);
+                        var code = csgen.generate(schemaInfo, jsonInstance, _namespace, rootName);
                         callback(null, code);
                     }
                     else

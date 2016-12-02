@@ -1,6 +1,7 @@
 {
-    "$schema": "config.schema.json?reload",
-    "configName": "Debug",
+    // comment
+    "$schema": "config.schema.json?reload", // fsd
+    "configName": /* ansnd;; */"Debug",
     "logServer": {
         "disable": false,
         "url": "https://localhost/SuperDup.Log/api/log",

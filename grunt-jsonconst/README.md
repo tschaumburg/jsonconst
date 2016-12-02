@@ -22,18 +22,17 @@ grunt.loadNpmTasks('grunt-jsonconst');
 ### Overview
 In your project's Gruntfile, add a section named `jsonconst` to the data object passed into `grunt.initConfig()`.
 
-```js
-grunt.initConfig({
-  jsonconst: {
-    options: {
-      // Task-specific options go here.
-    },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
-});
-```
+   ```js
+    "jsonconst": {
+       "fooConfig": {
+          "options": {
+             "language": ["javascript", "c#"],
+          },
+          "src": "foo.json"
+       }
+    }
+   ```
+
 
 ### Options
 

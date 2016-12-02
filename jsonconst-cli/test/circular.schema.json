@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string"
+        },
+        "pperson": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "$override": "true"
+                },
+                "spouse": {
+                    "$ref": "#/properties/pperson" // circular reference
+                }
+            }
+        }
+    }
+}

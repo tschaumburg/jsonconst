@@ -9,6 +9,20 @@ Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "jsonconst-cli", "jsonconst-
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "grunt-jsonconst", "grunt-jsonconst\grunt-jsonconst.njsproj", "{10A752C7-ABDC-479A-8442-D5B9AF113685}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5834A372-55C7-4F3D-BF20-608D298EA07E}"
+	ProjectSection(SolutionItems) = preProject
+		publishall.cmd = publishall.cmd
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{A6DB69BD-EE87-474F-AECD-FBF20ECC50EC}"
+	ProjectSection(SolutionItems) = preProject
+		images\problem.pdn = images\problem.pdn
+		images\problem.png = images\problem.png
+		images\solution.pdn = images\solution.pdn
+		images\solution.png = images\solution.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6DB69BD-EE87-474F-AECD-FBF20ECC50EC} = {5834A372-55C7-4F3D-BF20-608D298EA07E}
 	EndGlobalSection
 EndGlobal

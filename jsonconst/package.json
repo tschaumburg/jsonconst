@@ -1,28 +1,32 @@
 {
-    "name": "jsonconst",
-    "version": "0.0.9",
-    "description": "Library converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions",
-    "main": "dist/jsonconst.js",
-    "files": [
-        "dist/jsonconst.js",
-        "dist/jsonconst.d.ts",
-        "dist/jsonconst-schema.js",
-        "dist/jsonconst-schema.d.ts",
-        "dist/jsonconst-typescript.js",
-        "dist/jsonconst-typescript.d.ts",
-        "dist/jsonconst-csharp.js",
-        "dist/jsonconst-csharp.d.ts"
-    ],
-    "author": {
-        "name": "Thomas Schaumburg",
-        "email": "thomas@schaumburg-it.dk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/tschaumburg/jsonconst.git"
-    },
-    "readme": "",
-    "dependencies": {
-        "json-schema-ref-parser": "^3.1.2"
-    }
+  "name": "jsonconst",
+  "version": "0.0.24",
+  "description": "Library converting a JSON file into a strongly typed constant in the target language (currently supported: Typescript and C#). Intended for cross-platform config files, but useful for any constant definitions",
+  "main": "dist/jsonconst.js",
+  "files": [
+    "dist/jsonconst.js",
+    "dist/jsonconst.d.ts",
+    "dist/promise.js",
+    "dist/commented-json-parser.js",
+    "dist/commented-json-parser.d.ts",
+    "dist/jsonconst-schema.js",
+    "dist/jsonconst-schema.d.ts",
+    "dist/jsonconst-typescript.js",
+    "dist/jsonconst-typescript.d.ts",
+    "dist/jsonconst-csharp.js",
+    "dist/jsonconst-csharp.d.ts"
+  ],
+  "author": {
+    "name": "Thomas Schaumburg",
+    "email": "thomas@schaumburg-it.dk"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tschaumburg/jsonconst.git"
+  },
+  "readme": "",
+  "dependencies": {
+    "json-schema-ref-parser": "^3.1.2",
+    "strip-json-comments": "^2.0.1"
+  }
 }

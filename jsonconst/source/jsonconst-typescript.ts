@@ -138,7 +138,7 @@ export class GenerateTypescript
                 case jsonconstSchema.SchemaKind.arrayKind:
                     return this.getTypename(schema.getItems(), null) + "[]";
                 case jsonconstSchema.SchemaKind.objectKind:
-                    return schema.getClassname();
+                    return schema.getInterfaceName();
                 default:
                     return "<unknown1>";
             }
@@ -192,7 +192,7 @@ export class GenerateTypescript
     private instances: { schema: jsonconstSchema.ISchema, value: any }[] = [];
     private _generateInstance(schema: jsonconstSchema.ISchema, instance: any): string
     {
-        var result = "    class " + this.getInstanceClassname(schema, instance) + " extends " + schema.getClassname() + "\n";
+        var result = "    class " + this.getInstanceClassname(schema, instance) + " extends " + schema.getInterfaceName() + "\n";
         result = result + "    {" + "\n";
 
         var schemaPropertyNames = schema.getPropertyNames();
@@ -207,7 +207,7 @@ export class GenerateTypescript
             if (propname === '$schema')
                 continue;
 
-            if (propname === '$classname')
+            if (propname === '$class')
                 continue;
 
             var propSchema = schema.getPropertySchema(propname);
@@ -241,30 +241,39 @@ export class GenerateTypescript
             switch (schema.getKind())
             {
                 case jsonconstSchema.SchemaKind.arrayKind:
+                    if (!instance)
+                        return "null";
                     var result = "";
                     result = result + "[";
-                    var memberInstances: any[] = instance as any[];
+                    var memberInstances1 = instance;
                     var memberSchema = schema.getItems();
-                    if (memberInstances && memberSchema)
+                    if (memberInstances1 && memberSchema)
                     {
-                        for (var m = 0; m < memberInstances.length; m++)
+                        for (var m = 0; m < memberInstances1.length; m++)
                         {
-                            result = result + this.createValueExpresssion(memberSchema, memberInstances[m]) + ", ";
-                            //this.instances.push({ schema: memberSchema, value: memberInstances[m] });
+                            result = result + this.createValueExpresssion(memberSchema, memberInstances1[m]) + ", ";
                         }
                     }
                     result = result + "]";
                     return result;
                 case jsonconstSchema.SchemaKind.objectKind:
+                    if (!instance)
+                        return "null";
                     this.instances.push({ schema: schema, value: instance });
                     return "new " + this.getInstanceClassname(schema, instance) + "()";
                 case jsonconstSchema.SchemaKind.booleanKind:
                     return (instance ? "true" : "false");
                 case jsonconstSchema.SchemaKind.numberKind:
+                    if (!instance)
+                        return "0";
                     return instance;
                 case jsonconstSchema.SchemaKind.integerKind:
+                    if (!instance)
+                        return "0";
                     return instance;
                 case jsonconstSchema.SchemaKind.stringKind:
+                    if (!instance)
+                        return "null";
                     return '"' + instance + '"';
                 default:
                     return "unsupported value";
@@ -324,9 +333,9 @@ export class GenerateTypescript
     private _instanceNo = 1;
     private getInstanceClassname(schema: jsonconstSchema.ISchema, instance: Object): string
     {
-        if (!instance["$classname"])
-            instance["$classname"] = schema.getClassname() + "_Impl" + this._instanceNo++;
+        if (!instance["$class"])
+            instance["$class"] = schema.getInterfaceName() + "_Impl" + this._instanceNo++;
 
-        return instance["$classname"];
+        return instance["$class"];
     }
 }

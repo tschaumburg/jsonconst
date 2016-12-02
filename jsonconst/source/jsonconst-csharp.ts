@@ -19,8 +19,23 @@ export class GenerateCSharp
         filecontents = filecontents + this.generateClasses(schema) + "\n";
         filecontents = filecontents + this.generateInstances(schema, instance) + "\n";
 
-        rootName = rootName || "root";
-        filecontents = filecontents + "    public const " + this.getTypename(schema) + " " + rootName + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n";
+        //rootName = rootName || "root";
+        //filecontents = filecontents + "    public const " + this.getTypename(schema) + " " + rootName + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n";
+
+        rootName = rootName || "JsonConst.Current";
+        var constClass = "JsonConst";
+        var constMember = "Current";
+        if (rootName)
+        {
+            [constClass, constMember] = rootName.split('.', 2);
+        }
+
+        filecontents =
+            filecontents
+            + "    public static class " + constClass + "\n"
+            + "    {" + "\n"
+            + "        public readonly static " + this.getTypename(schema) + " " + constMember + " = " + this.createValueExpresssion(schema, instance) + ";" + "\n"
+            + "    }" + "\n";
 
         if (_namespace)
         {
@@ -125,17 +140,17 @@ export class GenerateCSharp
         switch (schema.getKind())
         {
             case jsonconstSchema.SchemaKind.booleanKind:
-                return "boolean";
+                return "bool";
             case jsonconstSchema.SchemaKind.integerKind:
-                return "number";
+                return "int";
             case jsonconstSchema.SchemaKind.numberKind:
-                return "number";
+                return "double";
             case jsonconstSchema.SchemaKind.stringKind:
                 return "string";
             case jsonconstSchema.SchemaKind.arrayKind:
                 return this.getTypename(schema.getItems()) + "[]";
             case jsonconstSchema.SchemaKind.objectKind:
-                return schema.getClassname();
+                return schema.getInterfaceName();
             default:
                 return "<unknown>";
         }
@@ -158,7 +173,12 @@ export class GenerateCSharp
     private instances: { schema: jsonconstSchema.ISchema, value: any }[] = [];
     private _generateInstance(schema: jsonconstSchema.ISchema, instance: any): string
     {
-        var result = "    class " + this.getInstanceClassname(schema, instance) + ": " + schema.getClassname() + "\n";
+        var baseclass = schema.getBaseclassName();
+        var baseclassTerm = "";
+        if (!!baseclass)
+            baseclassTerm = baseclass + ", ";
+
+        var result = "    class " + this.getInstanceClassname(schema, instance) + ": " + baseclassTerm + schema.getInterfaceName() + "\n";
         result = result + "    {" + "\n";
 
         for (var propname in instance)
@@ -166,16 +186,17 @@ export class GenerateCSharp
             if (propname === '$schema')
                 continue;
 
-            if (propname === '$classname')
+            if (propname === '$class')
                 continue;
 
             var propSchema = schema.getPropertySchema(propname);
             var propValue = instance[propname];
+            var overrideTerm = schema.isPropertyOverride(propname) ? "override " : "";
 
             if (!propSchema)
                 continue;
 
-            result = result + "        public " + this.getTypename(propSchema) + " " + propname + "\n";
+            result = result + "        public " + overrideTerm + this.getTypename(propSchema) + " " + propname + "\n";
             result = result + "        {\n";
             result = result + "            get\n";
             result = result + "            {\n";
@@ -230,9 +251,10 @@ export class GenerateCSharp
     private _instanceNo = 1;
     private getInstanceClassname(schema: jsonconstSchema.ISchema, instance: Object): string
     {
-        if (!instance["$classname"])
-            instance["$classname"] = schema.getClassname() + this._instanceNo++;
+        //if (!instance["$class"])
+        //    instance["$class"] = schema.getInterfaceName() + this._instanceNo++;
 
-        return instance["$classname"];
+        //return instance["$class"];
+        return schema.getClassName(instance);
     }
 }

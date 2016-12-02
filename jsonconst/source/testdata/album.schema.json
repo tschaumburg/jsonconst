@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "$classname": "PhotoAlbum",
+    "$class": "PhotoAlbum",
     "type": "object",
     "title": "Photo album metadata",
     "description": "Describes a photo album, and metadata about the images in it",
@@ -16,7 +16,7 @@
             "description": "Describes each of the photos in the album",
             "items": {
                 "type": "object",
-                "$classname": "ImageMetaData",
+                "$class": "ImageMetaData",
                 "title": "0 schema.",
                 "description": "An explanation about the purpose of this instance.",
                 "properties": {
